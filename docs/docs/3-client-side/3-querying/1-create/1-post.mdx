@@ -22,12 +22,12 @@ Create a record to `Post` table
 }
 ```
 
-<h4>Example</h4>
+<p>Using DTO above, we are going to create a post that have a title <code>"Today news is confusing"</code> and content <code>"Our weather today is a little cloudy but the temperature is high"</code> </p>
 
 ```json
 {
   "title": "Today news is confusing",
-  "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  "content": "Our weather today is a little cloudy but the temperature is high"
 }
 ```
 
@@ -37,6 +37,7 @@ Create a record to `Post` table
 
 <Tabs>
   <TabItem value="rest_api" label="REST API" default>
+  To create a record using REST API, you have to send a <code>POST</code> request to <code>/posts</code> endpoint
 
   ```md title="[POST]"
   /posts
@@ -44,6 +45,13 @@ Create a record to `Post` table
 
   </TabItem>
   <TabItem value="js_sdk" label="Javascript SDK">
+  To create a record using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+
+  ```bash
+  npm install @idk/client
+  ```
+
+  after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to create a <code>Post</code> record like below
 
   ```javascript
   import { IDKClient } from "@idk/client";

@@ -22,11 +22,15 @@ Create a record to `Reply` table
 }
 ```
 
-<h4>Example</h4>
+<p>
+  With the DTO above, we are going to create a reply that have a content{" "}
+  <code>"That's a really good post"</code> into a post with an id{" "}
+  <code>"6c976b04-05dc-4a6e-8154-0c82ecc21b59"</code>
+</p>
 
 ```json
 {
-  "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur interdum mauris, ut laoreet dui auctor eget. Phasellus et auctor magna",
+  "content": "That's a really good post",
   "postId": "6c976b04-05dc-4a6e-8154-0c82ecc21b59"
 }
 ```
@@ -37,29 +41,36 @@ Create a record to `Reply` table
 
 <Tabs>
   <TabItem value="rest_api" label="REST API" default>
+  To create a record using REST API, you have to send a <code>POST</code> request to <code>/replies</code> endpoint
 
-  ```md title="[POST]"
-  /replies
-  ```
+```md title="[POST]"
+/replies
+```
 
   </TabItem>
   <TabItem value="js_sdk" label="Javascript SDK">
+  To create a record using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
 
-  ```javascript
-  import { IDKClient } from "@idk/client";
+```bash
+npm install @idk/client
+```
 
-  const idk = new IDKClient();
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to create a <code>Reply</code> record like below
 
-  const createReply = async () => {
-    const reply = await idk.replies.create({
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur interdum mauris, ut laoreet dui auctor eget. Phasellus et auctor magna",
-      postId:"6c976b04-05dc-4a6e-8154-0c82ecc21b59"
-    });
+```javascript
+import { IDKClient } from "@idk/client";
 
-    return reply
-  }
-  ```
+const idk = new IDKClient();
+
+const createPost = async () => {
+  const reply = await idk.replies.create({
+    content: "That's a really good post",
+    postId: "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+  });
+
+  return reply;
+};
+```
 
   </TabItem>
 </Tabs>
@@ -73,7 +84,7 @@ Create a record to `Reply` table
 {
   "id": "string",
   "content": "string",
-  "postId":"string",
+  "postId": "string",
   "createdById": "string",
   "updatedById": "string",
   "createdAt": "date",
