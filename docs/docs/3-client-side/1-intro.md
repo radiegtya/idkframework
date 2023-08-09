@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Client Side Introduction
+# Introduction
 
 IDKFramework work seamlessly with any front-end framework such as REACT, VUE, Angular, and much more. You can directly use our client side REST API + SDK on your client side front-end without worrying about the back-end and the security.
 
