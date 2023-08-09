@@ -1,0 +1,98 @@
+---
+sidebar_position: 1
+---
+
+# Create Reply
+
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Create a record to `Reply` table
+
+## Body
+
+<BrowserWindow url="/replies">
+  <h4>Data Transfer Object (DTO)</h4>
+
+```json
+{
+  "content": "string",
+  "postId": "string"
+}
+```
+
+<h4>Example</h4>
+
+```json
+{
+  "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur interdum mauris, ut laoreet dui auctor eget. Phasellus et auctor magna",
+  "postId": "6c976b04-05dc-4a6e-8154-0c82ecc21b59"
+}
+```
+
+</BrowserWindow>
+
+## Request
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+
+  ```md title="[POST]"
+  /replies
+  ```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+
+  ```javascript
+  import { IDKClient } from "@idk/client";
+
+  const idk = new IDKClient();
+
+  const createReply = async () => {
+    const reply = await idk.replies.create({
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur interdum mauris, ut laoreet dui auctor eget. Phasellus et auctor magna",
+      postId:"6c976b04-05dc-4a6e-8154-0c82ecc21b59"
+    });
+
+    return reply
+  }
+  ```
+
+  </TabItem>
+</Tabs>
+
+## Response
+
+<BrowserWindow url="/replies">
+  <h4>Entity</h4>
+
+```json
+{
+  "id": "string",
+  "content": "string",
+  "postId":"string",
+  "createdById": "string",
+  "updatedById": "string",
+  "createdAt": "date",
+  "updatedAt": "date"
+}
+```
+
+<h4>Example</h4>
+
+```json
+{
+  "id": "d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04",
+  "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur interdum mauris, ut laoreet dui auctor eget. Phasellus et auctor magna",
+  "postId": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+  "createdAt": "2023-08-09T15:08:42.033Z",
+  "updatedAt": "2023-08-09T15:08:42.033Z",
+  "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+  "updatedById": null
+}
+```
+
+</BrowserWindow>
