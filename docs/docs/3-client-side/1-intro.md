@@ -33,7 +33,7 @@ GET /posts?where[createdBy][email][equals]=me@mail.com
 ```javascript
 import { IDKClient } from "@idk/client"
 
-const idk = new IDKClient
+const idk = new IDKClient()
 
 const posts = idk.posts.find({
     where: {
