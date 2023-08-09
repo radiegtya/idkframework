@@ -1,0 +1,94 @@
+---
+sidebar_position: 1
+---
+
+# Delete Reply
+
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Delete a record from `Reply` table
+
+## Request
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+  To delete a record using REST API, you need to have an <code>id</code> from a <code>Reply</code> record, after that send a <code>DELETE</code> request to <code>/replies/:id</code> endpoint
+
+```md title="[DELETE]"
+/replies/:id
+```
+
+For example, we will delete a <code>Reply</code> with an id <code>d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04</code>
+
+```md title="[DELETE]"
+/replies/d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+  To create a record using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+
+```bash
+# npm
+npm install @idk/client
+
+# yarn
+yarn add @idk/client
+```
+
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **delete** a <code>Reply</code> record like below
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const createPost = async () => {
+  const reply = await idk.replies.delete(
+    "d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04"
+  );
+
+  return reply;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+## Response
+
+<BrowserWindow url="/replies/d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04">
+  <h4>Entity</h4>
+
+```json
+{
+  "id": "string",
+  "content": "string",
+  "postId": "string",
+  "createdById": "string",
+  "updatedById": "string",
+  "createdAt": "date",
+  "updatedAt": "date"
+}
+```
+
+<p>
+  After sending a request, the response for your <b>deleted</b>{" "}
+  <code>Reply</code> record will look like this
+</p>
+
+```json
+{
+  "id": "d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04",
+  "content": "That's a really good post",
+  "postId": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+  "createdAt": "2023-08-09T15:08:42.033Z",
+  "updatedAt": "2023-08-09T15:08:42.033Z",
+  "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+  "updatedById": null
+}
+```
+
+</BrowserWindow>

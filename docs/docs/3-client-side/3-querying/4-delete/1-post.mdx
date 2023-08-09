@@ -1,0 +1,92 @@
+---
+sidebar_position: 1
+---
+
+# Delete Post
+
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Delete a record from `Post` table
+
+## Request
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+  To <b>delete</b> a record using REST API, you need to have an <code>id</code> from a <code>Post</code> record, after that send a <code>DELETE</code> request to <code>/posts/:id</code> endpoint
+
+```md title="[DELETE]"
+/posts/:id
+```
+
+For example, we will <b>delete</b> a <code>Post</code> with an id <code>6c976b04-05dc-4a6e-8154-0c82ecc21b59</code>
+
+```md title="[DELETE]"
+/posts/6c976b04-05dc-4a6e-8154-0c82ecc21b59
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+  To <b>delete</b> a record using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+
+```bash
+# npm
+npm install @idk/client
+
+# yarn
+yarn add @idk/client
+```
+
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **delete** a <code>Post</code> record like below
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const createPost = async () => {
+  const post = await idk.posts.delete("6c976b04-05dc-4a6e-8154-0c82ecc21b59");
+
+  return post;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+## Response
+
+<BrowserWindow url="/posts/6c976b04-05dc-4a6e-8154-0c82ecc21b59">
+  <h4>Entity</h4>
+
+```json
+{
+  "id": "string",
+  "title": "string",
+  "content": "string",
+  "createdById": "string",
+  "updatedById": "string",
+  "createdAt": "date",
+  "updatedAt": "date"
+}
+```
+
+<p>
+  After sending a request, the response for your <b>deleted</b>{" "}
+  <code>Post</code> record will look like this
+</p>
+
+```json
+{
+  "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+  "title": "Today news is confusing",
+  "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  "createdAt": "2023-08-09T14:52:12.783Z",
+  "updatedAt": "2023-08-09T14:52:12.783Z",
+  "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+  "updatedById": null
+}
+```
+
+</BrowserWindow>
