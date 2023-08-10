@@ -38,8 +38,11 @@ delete a post by id
 ### 7. [POST] /api/v1/posts/many
 create many posts
 
-### 8. [PATCH] /api/v1/posts/{id}/many
-update many posts
+### 8. [PATCH] /api/v1/posts/many
+update many posts, accept where, and data body
+
+### 9. [DELETE] /api/v1/posts/many
+delete many posts, accept where, and data body
 
 ---
 
@@ -69,11 +72,11 @@ update a reply by id.
 ### 6. [DELETE] /api/v1/replies/{id}
 delete a reply by id
 
-### 7. [POST] /api/v1/replies/many
-create many replies
+### 8. [PATCH] /api/v1/replies/many
+update many replies, accept where, and data body
 
-### 8. [PATCH] /api/v1/replies/{id}/many
-update many replies
+### 9. [DELETE] /api/v1/replies/many
+delete many replies, accept where, and data body
 
 ---
 
