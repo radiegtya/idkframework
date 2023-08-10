@@ -10,24 +10,37 @@ import TabItem from "@theme/TabItem";
 
 Create a record to `Post` table
 
-## Body
+## Entity
 
-<BrowserWindow url="/posts">
-  <h4>Data Transfer Object (DTO)</h4>
-
-```json
-{
-  "title": "string",
-  "content": "string"
+```typescript
+export class PostEntity {
+  id: string,
+  title: string,
+  content: string,
+  createdById: string,
+  updatedById: string,
+  createdAt: Date,
+  updatedAt: Date
 }
 ```
 
+## Data Transfer Object (DTO)
+
+```typescript
+export class CreatePostDto {
+  title: string,
+  content: string,
+}
+```
+
+## Body
+
+<BrowserWindow url="/posts">
+
 <p>
-  Using DTO above, we are going to create a post that have a title{" "}
-  <code>"Today news is confusing"</code> and content{" "}
-  <code>
-    "Our weather today is a little cloudy but the temperature is high"
-  </code>{" "}
+  Using our <code>CreatePostDto</code>, we are going to create a post that have
+  a <code>title</code> <b>"Today news is confusing"</b> and <code>content</code>{" "}
+  <b>"Our weather today is a little cloudy but the temperature is high"</b>
 </p>
 
 ```json
@@ -43,7 +56,7 @@ Create a record to `Post` table
 
 <Tabs>
   <TabItem value="rest_api" label="REST API" default>
-  To create a record using REST API, you have to send a <code>POST</code> request to <code>/posts</code> endpoint
+  To <b>create</b> a record using REST API, you have to send a <code>POST</code> request to <code>/posts</code> endpoint
 
 ```md title="[POST]"
 /posts
@@ -51,7 +64,7 @@ Create a record to `Post` table
 
   </TabItem>
   <TabItem value="js_sdk" label="Javascript SDK">
-  To create a record using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+  To <b>create</b> a record using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
 
 ```bash
 # npm
@@ -61,7 +74,7 @@ npm install @idk/client
 yarn add @idk/client
 ```
 
-after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to create a <code>Post</code> record like below
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **create** a <code>Post</code> record like below
 
 ```javascript
 import { IDKClient } from "@idk/client";
@@ -82,22 +95,9 @@ const createPost = async () => {
   </TabItem>
 </Tabs>
 
-## Response
+### Response
 
 <BrowserWindow url="/posts">
-  <h4>Entity</h4>
-
-```json
-{
-  "id": "string",
-  "title": "string",
-  "content": "string",
-  "createdById": "string",
-  "updatedById": "string",
-  "createdAt": "date",
-  "updatedAt": "date"
-}
-```
 
 <p>
   After sending a request, the response for your new <code>Post</code> record
