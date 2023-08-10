@@ -81,7 +81,7 @@ import { IDKClient } from "@idk/client";
 
 const idk = new IDKClient();
 
-const createPost = async () => {
+const createReply = async () => {
   const reply = await idk.replies.create({
     content: "That's a really good post",
     postId: "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
