@@ -10,7 +10,21 @@ import TabItem from "@theme/TabItem";
 
 Update a record from `Post` table
 
-## Data Type Object (DTO)
+## Entity
+
+```typescript
+export class PostEntity {
+  id: string,
+  title: string,
+  content: string,
+  createdById: string,
+  updatedById: string,
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+## Data Transfer Object (DTO)
 
 ```typescript
 export class UpdatePostDto {

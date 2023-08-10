@@ -10,7 +10,21 @@ import TabItem from "@theme/TabItem";
 
 Update a record from `Reply` table
 
-## Data Type Object (DTO)
+## Entity
+
+```typescript
+export class ReplyEntity {
+  id: string,
+  content: string,
+  postId: string,
+  createdById: string,
+  updatedById: string,
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+## Data Transfer Object (DTO)
 
 ```typescript
 export class UpdateReplyDto {
@@ -24,7 +38,7 @@ export class UpdateReplyDto {
 
 <p>
   Using our <code>UpdateReplyDto</code>, we are going to update our reply{" "}
-  <code>content</code> into <b>"That's a lot of knowledge, thanks!"</b> and{" "}
+  <code>content</code> into <b>"That's a lot of knowledge, thanks!"</b>
 </p>
 
 ```json
