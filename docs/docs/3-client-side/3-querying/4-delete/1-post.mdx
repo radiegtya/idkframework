@@ -45,7 +45,7 @@ import { IDKClient } from "@idk/client";
 
 const idk = new IDKClient();
 
-const createPost = async () => {
+const deletePost = async () => {
   const post = await idk.posts.delete("6c976b04-05dc-4a6e-8154-0c82ecc21b59");
 
   return post;
