@@ -35,6 +35,12 @@ update a post by id. You can also use this endpoint for connecting/linking to re
 ### 6. [DELETE] /api/v1/posts/{id}
 delete a post by id
 
+### 7. [POST] /api/v1/posts/many
+create many posts
+
+### 8. [PATCH] /api/v1/posts/{id}/many
+update many posts
+
 ---
 
 ## Upload API 
@@ -63,6 +69,12 @@ update a reply by id.
 ### 6. [DELETE] /api/v1/replies/{id}
 delete a reply by id
 
+### 7. [POST] /api/v1/replies/many
+create many replies
+
+### 8. [PATCH] /api/v1/replies/{id}/many
+update many replies
+
 ---
 
 ## Users API (admin only)
@@ -82,7 +94,7 @@ create a user
 ### 5. [PATCH] /api/v1/users/{id}
 update a user by id. 
 
-### 6. [DELETE] /api/v1/profiles/{id}
+### 6. [DELETE] /api/v1/users/{id}
 delete a profile by id
 
 ---
