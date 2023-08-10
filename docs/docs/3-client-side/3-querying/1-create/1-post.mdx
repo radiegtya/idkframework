@@ -1,0 +1,119 @@
+---
+sidebar_position: 1
+---
+
+# Create Post
+
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Create a record to `Post` table
+
+## Entity
+
+```typescript
+export class PostEntity {
+  id: string,
+  title: string,
+  content: string,
+  createdById: string,
+  updatedById: string,
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+## Data Transfer Object (DTO)
+
+```typescript
+export class CreatePostDto {
+  title: string,
+  content: string,
+}
+```
+
+## Body
+
+<BrowserWindow url="/posts">
+
+<p>
+  Using our <code>CreatePostDto</code>, we are going to create a post that have
+  a <code>title</code> <b>"Today news is confusing"</b> and <code>content</code>{" "}
+  <b>"Our weather today is a little cloudy but the temperature is high"</b>
+</p>
+
+```json
+{
+  "title": "Today news is confusing",
+  "content": "Our weather today is a little cloudy but the temperature is high"
+}
+```
+
+</BrowserWindow>
+
+## Request
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+  To <b>create</b> a record using REST API, you have to send a <code>POST</code> request to <code>/posts</code> endpoint
+
+```md title="[POST]"
+/posts
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+  To <b>create</b> a record using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+
+```bash
+# npm
+npm install @idk/client
+
+# yarn
+yarn add @idk/client
+```
+
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **create** a <code>Post</code> record like below
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const createPost = async () => {
+  const post = await idk.posts.create({
+    title: "Today news is confusing",
+    content:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  });
+
+  return post;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+### Response
+
+<BrowserWindow url="/posts">
+
+<p>
+  After sending a request, the response for your new <code>Post</code> record
+  will look like this
+</p>
+
+```json
+{
+  "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+  "title": "Today news is confusing",
+  "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  "createdAt": "2023-08-09T14:52:12.783Z",
+  "updatedAt": "2023-08-09T14:52:12.783Z",
+  "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+  "updatedById": null
+}
+```
+
+</BrowserWindow>

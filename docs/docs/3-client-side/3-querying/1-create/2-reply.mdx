@@ -1,0 +1,118 @@
+---
+sidebar_position: 1
+---
+
+# Create Reply
+
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Create a record to `Reply` table
+
+## Entity
+
+```typescript
+export class ReplyEntity {
+  id: string,
+  content: string,
+  postId: string,
+  createdById: string,
+  updatedById: string,
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+## Data Transfer Object (DTO)
+
+```typescript
+export class CreateReplyDto {
+  content: string,
+  postId: string
+}
+```
+
+## Body
+
+<BrowserWindow url="/replies">
+
+<p>
+  Using our <code>CreateReplyDto</code>, we are going to create a reply that
+  have a <code>content</code> <b>"That's a really good post"</b> into a{" "}
+  <code>postId</code> <b>"6c976b04-05dc-4a6e-8154-0c82ecc21b59"</b>
+</p>
+
+```json
+{
+  "content": "That's a really good post",
+  "postId": "6c976b04-05dc-4a6e-8154-0c82ecc21b59"
+}
+```
+
+</BrowserWindow>
+
+## Request
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+  To <b>create</b> a record using REST API, you have to send a <code>POST</code> request to <code>/replies</code> endpoint
+
+```md title="[POST]"
+/replies
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+  To <b>create</b> a record using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+
+```bash
+# npm
+npm install @idk/client
+
+# yarn
+yarn add @idk/client
+```
+
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **create** a <code>Reply</code> record like below
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const createReply = async () => {
+  const reply = await idk.replies.create({
+    content: "That's a really good post",
+    postId: "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+  });
+
+  return reply;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+### Response
+
+<BrowserWindow url="/replies">
+
+<p>
+  After sending a request, the response for your new <code>Reply</code> record
+  will look like this
+</p>
+
+```json
+{
+  "id": "d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04",
+  "content": "That's a really good post",
+  "postId": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+  "createdAt": "2023-08-09T15:08:42.033Z",
+  "updatedAt": "2023-08-09T15:08:42.033Z",
+  "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+  "updatedById": null
+}
+```
+
+</BrowserWindow>

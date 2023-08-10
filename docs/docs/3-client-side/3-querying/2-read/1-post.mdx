@@ -1,0 +1,365 @@
+---
+sidebar_position: 1
+---
+
+# Read All Post
+
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Read all records from `Post` table
+
+## Entity
+
+```json
+[
+  {
+    "id": "string",
+    "title": "string",
+    "content": "string",
+    "createdById": "string",
+    "updatedById": "string",
+    "createdAt": "date",
+    "updatedAt": "date"
+  }
+]
+```
+
+## Request
+
+#### Default read all records
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+  To <b>read</b> all records using REST API, you have to send a <code>GET</code> request to <code>/posts</code> endpoint
+
+```md title="[GET]"
+/posts
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+  To <b>read</b> all records using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+
+```bash
+# npm
+npm install @idk/client
+
+# yarn
+yarn add @idk/client
+```
+
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **read** all <code>Post</code> records like below
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const getPosts = async () => {
+  const posts = await idk.posts.find();
+
+  return posts;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+### Response
+
+<BrowserWindow url="/posts">
+
+<p>
+  After sending a request, the response for all <code>Post</code> records will
+  look like this
+</p>
+
+```json
+[
+  {
+    "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+    "title": "Today news is confusing",
+    "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "createdAt": "2023-08-09T14:52:12.783Z",
+    "updatedAt": "2023-08-09T14:52:12.783Z",
+    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+    "updatedById": null
+  }
+]
+```
+
+</BrowserWindow>
+
+## Filters
+
+Records can optionally be filtered, for example we want to filter `Post` that have a title contains `News` word in it.
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+  To <b>read</b> all records with <b>filter</b> above using REST API, you have to send a <code>GET</code> request to <code>/posts</code> endpoint with stringified object query params <code>where[title][contains]=News</code>
+
+```md title="[GET]"
+/posts?where[title][contains]=News
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+  To <b>read</b> all records with <b>filter</b> above using our Javascript SDK, it will look like this
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const getPosts = async () => {
+  const posts = await idk.posts.find({
+    where: {
+      title: {
+        contains: "News",
+      },
+    },
+  });
+
+  return posts;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+### Response
+
+<BrowserWindow url="/posts?where[title][contains]=News">
+
+<p>
+  After sending a request, the response for all <code>Post</code> records that
+  have been filtered above will look like this
+</p>
+
+```json
+[
+  {
+    "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+    "title": "Today news is confusing",
+    "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "createdAt": "2023-08-09T14:52:12.783Z",
+    "updatedAt": "2023-08-09T14:52:12.783Z",
+    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+    "updatedById": null
+  },
+  {
+    "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+    "title": "Today news is really accurate",
+    "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "createdAt": "2023-08-09T14:52:12.783Z",
+    "updatedAt": "2023-08-09T14:52:12.783Z",
+    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+    "updatedById": null
+  }
+]
+```
+
+</BrowserWindow>
+
+:::info
+
+Read more on **[filters](./)** section.
+
+:::
+
+## Select and Include
+
+Selecting only the fields and relations that you require rather than relying on the default selection set can ✔ reduce the size of the response and ✔ improve query speed.
+
+### Select
+
+All the fields are included in the response by default. You can select a subset of fields by providing the `select` query params. Let's say we just want to select `title` and `content` from `Post` records
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+  To <b>read</b> all records with <code>select</code> above using REST API, you have to send a <code>GET</code> request to <code>/posts</code> endpoint with query params <code>select[title]=true&select[content]=true</code>
+
+```md title="[GET]"
+/posts?select[title]=true&select[content]=true
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+  To <b>read</b> all records with <code>select</code> above using our Javascript SDK, it will look like this
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const getPosts = async () => {
+  const posts = await idk.posts.find({
+    select: {
+      title: true,
+      content: true,
+    },
+  });
+
+  return posts;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+#### Response
+
+<BrowserWindow url="/posts?select[title]=true&select[content]=true">
+
+<p>
+  After sending a request, the response for all <code>Post</code> records with
+  selected <code>title</code> and <code>content</code> field will look like this
+</p>
+
+```json
+[
+  {
+    "title": "Today news is confusing",
+    "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  }
+]
+```
+
+</BrowserWindow>
+
+You can also use a nested `select` to include relation fields. For example with our case above, we want to include `Post` creator `email`.
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+
+```md title="[GET]"
+/posts?select[title]=true&select[content]=true&select[createdBy][select][email]=true
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const getPosts = async () => {
+  const posts = await idk.posts.find({
+    select: {
+      title: true,
+      content: true,
+      createdBy: {
+        select: {
+          email: true,
+        },
+      },
+    },
+  });
+
+  return posts;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+#### Response
+
+<BrowserWindow url="/posts?select[title]=true&select[content]=true&select[createdBy][select][email]=true">
+
+```json
+[
+  {
+    "title": "Today news is confusing",
+    "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "createdBy": {
+      "email": "tom@gmail.com"
+    }
+  }
+]
+```
+
+</BrowserWindow>
+
+:::warning
+
+Note that you cannot use `select` and `include` on the same level
+
+:::
+
+### Include
+
+Include all fields for a specific relation. Let's say we want to include all of creator fields from `Post` records.
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+  To <b>read</b> all records with <code>include</code> above using REST API, you have to send a <code>GET</code> request to <code>/posts</code> endpoint with query params <code>include[createdBy]=true</code>
+
+```md title="[GET]"
+/posts?include[createdBy]=true
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+  To <b>read</b> all records with <code>include</code> above using our Javascript SDK, it will look like this
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const getPosts = async () => {
+  const posts = await idk.posts.find({
+    include: {
+      createdBy: true,
+    },
+  });
+
+  return posts;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+#### Response
+
+<BrowserWindow url="/posts">
+
+<p>
+  After sending a request, the response for all <code>Post</code> records will
+  look like this
+</p>
+
+```json
+[
+  {
+    "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+    "title": "Today news is confusing",
+    "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "createdAt": "2023-08-09T14:52:12.783Z",
+    "updatedAt": "2023-08-09T14:52:12.783Z",
+    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+    "createdBy": {
+      "id": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+      "email": "tom@gmail.com",
+      "name": "Tom Johnson",
+      "password": "$2a$10$8jPLW6yHsHCHnKgsdMccluGJym7R/OjLlrxH0a8maniFAvv6bF2/K",
+      "createdAt": "2023-08-09T09:37:51.883Z",
+      "updatedAt": "2023-08-09T09:37:51.883Z"
+    }
+    "updatedById": null
+  }
+]
+```
+
+</BrowserWindow>
+
+:::info
+
+Read more on **[select and include](./)** section.
+
+:::

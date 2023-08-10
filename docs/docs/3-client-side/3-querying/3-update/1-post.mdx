@@ -1,0 +1,131 @@
+---
+sidebar_position: 1
+---
+
+# Update Post
+
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Update a record from `Post` table
+
+## Entity
+
+```typescript
+export class PostEntity {
+  id: string,
+  title: string,
+  content: string,
+  createdById: string,
+  updatedById: string,
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+## Data Transfer Object (DTO)
+
+```typescript
+export class UpdatePostDto {
+  title?: string,
+  content?: string,
+}
+```
+
+## Body
+
+<BrowserWindow url="/posts/:id">
+
+<p>
+  Using our <code>UpdatePostDto</code>, we are going to update our post{" "}
+  <code>title</code> into <b>"How to be a Software Engineer"</b> and{" "}
+  <code>content</code> into{" "}
+  <b>"Phasellus a tellus non est faucibus congue a eget risus."</b>
+</p>
+
+```json
+{
+  "title": "How to be a Software Engineer",
+  "content": "Phasellus a tellus non est faucibus congue a eget risus."
+}
+```
+
+</BrowserWindow>
+
+## Request
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+  To <b>update</b> a record using REST API, you need to have an <code>id</code> from a <code>Post</code> record, after that send a <code>PATCH</code> request to <code>/posts/:id</code> endpoint
+
+```md title="[PATCH]"
+/posts/:id
+```
+
+For example, we will <b>update</b> a <code>Post</code> with an id <code>6c976b04-05dc-4a6e-8154-0c82ecc21b59</code>
+
+```md title="[PATCH]"
+/posts/6c976b04-05dc-4a6e-8154-0c82ecc21b59
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+  To <b>update</b> a record using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+
+```bash
+# npm
+npm install @idk/client
+
+# yarn
+yarn add @idk/client
+```
+
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **update** a <code>Post</code> record like below
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const updatePost = async () => {
+  const post = await idk.posts.update("6c976b04-05dc-4a6e-8154-0c82ecc21b59", {
+    title: "How to be a Software Engineer",
+    content: "Phasellus a tellus non est faucibus congue a eget risus.",
+  });
+
+  return post;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+### Response
+
+<BrowserWindow url="/posts/6c976b04-05dc-4a6e-8154-0c82ecc21b59">
+
+<p>
+  After sending a request, the response for <b>updated</b> <code>Post</code>{" "}
+  record will look like this
+</p>
+
+```json
+{
+  "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+  "title": "How to be a Software Engineer",
+  "content": "Phasellus a tellus non est faucibus congue a eget risus.",
+  "createdAt": "2023-08-09T16:52:12.783Z",
+  "updatedAt": "2023-08-09T16:52:12.783Z",
+  "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+  "updatedById": null
+}
+```
+
+</BrowserWindow>
+
+:::info
+
+Also read on **[Link and unlink relation](./)** section.
+
+:::

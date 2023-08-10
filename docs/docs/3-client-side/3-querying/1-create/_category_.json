@@ -1,0 +1,8 @@
+{
+  "label": "Create Record",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "description": "Create record to a table"
+  }
+}

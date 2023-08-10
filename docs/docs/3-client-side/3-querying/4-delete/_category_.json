@@ -1,0 +1,8 @@
+{
+  "label": "Delete Record",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Delete record from a table"
+  }
+}
