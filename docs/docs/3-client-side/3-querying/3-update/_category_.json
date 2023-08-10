@@ -1,0 +1,8 @@
+{
+  "label": "Update Record",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Update record from a table"
+  }
+}
