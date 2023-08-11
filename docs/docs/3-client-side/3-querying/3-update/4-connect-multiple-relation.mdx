@@ -1,0 +1,114 @@
+---
+sidebar_position: 3
+---
+
+# Connect Multiple Relation
+
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+In this example we are going to connect multiple records from `replies` table to a record from `posts` table.
+
+## Request
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+
+### URL
+
+To <b>connect</b> multiple records using REST API, you need to have an <code>id</code> from a destination record, which is in this case a record from <code>posts</code> table, after that send a <code>PATCH</code> request to <code>/api/v1/posts/:id</code> endpoint
+
+```md
+[PATCH] /api/v1/posts/:id
+```
+
+For example, we will <b>connect</b> multiple records from <code>replies</code> table <b>to</b> a single record from <code>posts</code> table with an id <code>73cd92eb-a530-4b86-bfcd-9efebaa31178</code>
+
+```md
+[PATCH] /api/v1/posts/73cd92eb-a530-4b86-bfcd-9efebaa31178
+```
+
+### Body
+
+<BrowserWindow url="/api/v1/posts/73cd92eb-a530-4b86-bfcd-9efebaa31178">
+
+```json
+{
+  "replies": {
+    "connect": [
+      {
+        "id": "36934110-f989-4c63-87ce-195c6ab37920"
+      },
+      {
+        "id": "bcd81011-c9da-408f-bb86-0abb27bbc869"
+      },
+      {
+        "id": "cf2d4ea0-7958-46c0-a3ab-c12fa85281d2"
+      }
+    ]
+  }
+}
+```
+
+</BrowserWindow>
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+  To <b>connect</b> multiple records using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+
+```bash
+# npm
+npm install @idk/client
+
+# yarn
+yarn add @idk/client
+```
+
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **connect** multiple records from <code>replies</code> table to a single record from <code>posts</code> table like below
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const connectRepliesToPost = async () => {
+  const post = await idk.posts.update("73cd92eb-a530-4b86-bfcd-9efebaa31178", {
+    replies: {
+      connect: [
+        {
+          id: "36934110-f989-4c63-87ce-195c6ab37920",
+        },
+        {
+          id: "bcd81011-c9da-408f-bb86-0abb27bbc869",
+        },
+        {
+          id: "cf2d4ea0-7958-46c0-a3ab-c12fa85281d2",
+        },
+      ],
+    },
+  });
+
+  return post;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+## Response
+
+<BrowserWindow url="/api/v1/posts/73cd92eb-a530-4b86-bfcd-9efebaa31178">
+
+```json
+{
+  "id": "73cd92eb-a530-4b86-bfcd-9efebaa31178",
+  "title": "How to be a Software Engineer",
+  "content": "You can see some random tutorial at YouTube.",
+  "createdAt": "2023-08-11T14:22:12.783Z",
+  "updatedAt": "2023-08-11T14:22:12.783Z",
+  "createdById": "6ac0aa6f-c447-4936-ace9-b9038baca50f",
+  "updatedById": null
+}
+```
+
+</BrowserWindow>

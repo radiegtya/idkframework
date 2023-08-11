@@ -1,46 +1,52 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Read All Reply
+# Find All With Connection
 
 import BrowserWindow from "@site/src/components/BrowserWindow";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-Read all records from `Reply` table
+In this example we are going to find records with connection from `posts` table. Basically it's the same as [**`find-all`**](./1-find-all.mdx), but only it have additional detail as records `count`.
+
+- When using **REST API**, instead of using regular `/api/v1/posts`, we are going to use `/api/v1/posts/connection`.
+- When using **Javascript SDK**, instead of using `find` method, we are going to use `findConnection` method.
 
 ## Entity
 
 ```json
-[
-  {
-    "id": "string",
-    "content": "string",
-    "createdById": "string",
-    "updatedById": "string",
-    "postId": "string",
-    "createdAt": "date",
-    "updatedAt": "date"
-  }
-]
+{
+  "data": [
+    {
+      "id": "string",
+      "title": "string",
+      "content": "string",
+      "createdById": "string",
+      "updatedById": "string",
+      "createdAt": "date",
+      "updatedAt": "date"
+    }
+  ],
+  "count": "number"
+}
 ```
 
 ## Request
 
-#### Default read all records
+#### Default read all records with connection
 
 <Tabs>
   <TabItem value="rest_api" label="REST API" default>
-  To <b>read</b> all records using REST API, you have to send a <code>GET</code> request to <code>/replies</code> endpoint
+  To <b>read</b> all records using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts/connection</code> endpoint
 
-```md title="[GET]"
-/replies
+```md
+[GET] /api/v1/posts/connection
 ```
 
   </TabItem>
   <TabItem value="js_sdk" label="Javascript SDK">
-  To <b>read</b> all records using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+    To send a request using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
 
 ```bash
 # npm
@@ -50,17 +56,17 @@ npm install @idk/client
 yarn add @idk/client
 ```
 
-after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **read** all <code>Reply</code> records like below
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **read** all <code>posts</code> records like below
 
 ```javascript
 import { IDKClient } from "@idk/client";
 
 const idk = new IDKClient();
 
-const getReplies = async () => {
-  const replies = await idk.replies.find();
+const getPostsConnection = async () => {
+  const posts = await idk.posts.findConnection();
 
-  return replies;
+  return posts;
 };
 ```
 
@@ -69,39 +75,73 @@ const getReplies = async () => {
 
 ### Response
 
-<BrowserWindow url="/replies">
-
-<p>
-  After sending a request, the response for all <code>Reply</code> records will
-  look like this
-</p>
+<BrowserWindow url="/api/v1/posts/connection">
 
 ```json
-[
-  {
-    "id": "d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04",
-    "content": "That's a really good post",
-    "postId": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
-    "createdAt": "2023-08-09T15:08:42.033Z",
-    "updatedAt": "2023-08-09T15:08:42.033Z",
-    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
-    "updatedById": null
-  }
-]
+{
+  "data": [
+    {
+      "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+      "title": "Today news is confusing",
+      "content": "Our weather today is a little cloudy but the temperature is high",
+      "createdAt": "2023-08-09T14:52:12.783Z",
+      "updatedAt": "2023-08-09T14:52:12.783Z",
+      "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+      "updatedById": null
+    },
+    {
+      "id": "764c1c1f-1b7c-4805-8b6d-cfc65caea02a",
+      "title": "Tomorrow news is better",
+      "content": "Our weather tomorrow is a amazing",
+      "createdAt": "2023-08-09T14:52:12.783Z",
+      "updatedAt": "2023-08-09T14:52:12.783Z",
+      "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+      "updatedById": null
+    },
+    {
+      "id": "764c1c1f-1b7c-4805-8b6d-cfc65caea02a",
+      "title": "Tomorrow news is better",
+      "content": "Our weather tomorrow is a amazing",
+      "createdAt": "2023-08-09T14:52:12.783Z",
+      "updatedAt": "2023-08-09T14:52:12.783Z",
+      "createdById": "6ac0aa6f-c447-4936-ace9-b9038baca50f",
+      "updatedById": null
+    },
+    {
+      "id": "a40ad5cd-e278-4bb5-b3ac-de665f18d957",
+      "title": "Which is better, using oil or butter for fried rice",
+      "content": "We will discover which is better for fried rice",
+      "createdAt": "2023-08-10T10:34:12.783Z",
+      "updatedAt": "2023-08-10T10:34:12.783Z",
+      "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+      "updatedById": null
+    },
+    {
+      "id": "73cd92eb-a530-4b86-bfcd-9efebaa31178",
+      "title": "Reading books will make you a better person",
+      "content": "Many research have proofed that reading books will make you smart and wiser",
+      "createdAt": "2023-08-11T14:22:12.783Z",
+      "updatedAt": "2023-08-11T14:22:12.783Z",
+      "createdById": "6ac0aa6f-c447-4936-ace9-b9038baca50f",
+      "updatedById": null
+    }
+  ],
+  "count": 5
+}
 ```
 
 </BrowserWindow>
 
 ## Filters
 
-Records can optionally be filtered, for example we want to filter `Reply` that have a `content` contains `good` word in it.
+Records can optionally be filtered, for example we want to filter records from `posts` table that have a title contains **"better"** word in it.
 
 <Tabs>
   <TabItem value="rest_api" label="REST API" default>
-  To <b>read</b> all records with <b>filter</b> above using REST API, you have to send a <code>GET</code> request to <code>/replies</code> endpoint with stringified object query params <code>where[content][contains]=good</code>
+  To <b>read</b> all records with <b>filter</b> above using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts/connection</code> endpoint with stringified object query params <code>where[title][contains]=better</code>
 
-```md title="[GET]"
-/replies?where[content][contains]=good
+```md
+[GET] /api/v1/posts/connection?where[title][contains]=better
 ```
 
   </TabItem>
@@ -113,16 +153,16 @@ import { IDKClient } from "@idk/client";
 
 const idk = new IDKClient();
 
-const getReplies = async () => {
-  const replies = await idk.replies.find({
+const getPostsConnection = async () => {
+  const posts = await idk.posts.findConnection({
     where: {
-      content: {
-        contains: "good",
+      title: {
+        contains: "better",
       },
     },
   });
 
-  return replies;
+  return posts;
 };
 ```
 
@@ -131,34 +171,41 @@ const getReplies = async () => {
 
 ### Response
 
-<BrowserWindow url="/replies?where[content][contains]=good">
-
-<p>
-  After sending a request, the response for all <code>Reply</code> records that
-  have been filtered above will look like this
-</p>
+<BrowserWindow url="/api/v1/posts/connection?where[title][contains]=better">
 
 ```json
-[
-  {
-    "id": "d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04",
-    "content": "That's a really good post",
-    "postId": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
-    "createdAt": "2023-08-09T15:08:42.033Z",
-    "updatedAt": "2023-08-09T15:08:42.033Z",
-    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
-    "updatedById": null
-  },
-  {
-    "id": "d9c4bc97-7632-49ba-b1dd-43e7cfdbfc05",
-    "content": "Really a good thing",
-    "postId": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
-    "createdAt": "2023-08-09T15:08:42.033Z",
-    "updatedAt": "2023-08-09T15:08:42.033Z",
-    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
-    "updatedById": null
-  }
-]
+{
+  "data": [
+    {
+      "id": "764c1c1f-1b7c-4805-8b6d-cfc65caea02a",
+      "title": "Tomorrow news is better",
+      "content": "Our weather tomorrow is a amazing",
+      "createdAt": "2023-08-09T14:52:12.783Z",
+      "updatedAt": "2023-08-09T14:52:12.783Z",
+      "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+      "updatedById": null
+    },
+    {
+      "id": "a40ad5cd-e278-4bb5-b3ac-de665f18d957",
+      "title": "Which is better, using oil or butter for fried rice",
+      "content": "We will discover which is better for fried rice",
+      "createdAt": "2023-08-10T10:34:12.783Z",
+      "updatedAt": "2023-08-10T10:34:12.783Z",
+      "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+      "updatedById": null
+    },
+    {
+      "id": "73cd92eb-a530-4b86-bfcd-9efebaa31178",
+      "title": "Reading books will make you a better person",
+      "content": "Many research have proofed that reading books will make you smart and wiser",
+      "createdAt": "2023-08-11T14:22:12.783Z",
+      "updatedAt": "2023-08-11T14:22:12.783Z",
+      "createdById": "6ac0aa6f-c447-4936-ace9-b9038baca50f",
+      "updatedById": null
+    }
+  ],
+  "count": 3
+}
 ```
 
 </BrowserWindow>
@@ -175,14 +222,14 @@ Selecting only the fields and relations that you require rather than relying on 
 
 ### Select
 
-All the fields are included in the response by default. You can select a subset of fields by providing the `select` query params. Let's say we just want to select `title` and `content` from `Reply` records
+All the fields are included in the response by default. You can select a subset of fields by providing the `select` query params. Let's say we just want to select `title` and `content` all records within `posts` table
 
 <Tabs>
   <TabItem value="rest_api" label="REST API" default>
-  To <b>read</b> all records with <code>select</code> above using REST API, you have to send a <code>GET</code> request to <code>/replies</code> endpoint with query params <code>select[id]=true&select[content]=true</code>
+  To <b>read</b> all records with <code>select</code> above using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts/connection</code> endpoint with query params <code>select[title]=true&select[content]=true</code>
 
-```md title="[GET]"
-/replies?select[id]=true&select[content]=true
+```md
+[GET] /api/v1/posts/connection?select[title]=true&select[content]=true
 ```
 
   </TabItem>
@@ -194,15 +241,15 @@ import { IDKClient } from "@idk/client";
 
 const idk = new IDKClient();
 
-const getReplies = async () => {
-  const replies = await idk.replies.find({
+const getPostsConnection = async () => {
+  const posts = await idk.posts.findConnection({
     select: {
-      id: true,
+      title: true,
       content: true,
     },
   });
 
-  return replies;
+  return posts;
 };
 ```
 
@@ -211,31 +258,45 @@ const getReplies = async () => {
 
 #### Response
 
-<BrowserWindow url="/replies?select[id]=true&select[content]=true">
-
-<p>
-  After sending a request, the response for all <code>Reply</code> records with
-  selected <code>title</code> and <code>content</code> field will look like this
-</p>
+<BrowserWindow url="/api/v1/posts/connection?select[title]=true&select[content]=true">
 
 ```json
-[
-  {
-    "id": "d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04",
-    "content": "That's a really good post"
-  }
-]
+{
+  "data": [
+    {
+      "title": "Today news is confusing",
+      "content": "Our weather today is a little cloudy but the temperature is high"
+    },
+    {
+      "title": "Tomorrow news is better",
+      "content": "Our weather tomorrow is a amazing"
+    },
+    {
+      "title": "Tomorrow news is better",
+      "content": "Our weather tomorrow is a amazing"
+    },
+    {
+      "title": "Which is better, using oil or butter for fried rice",
+      "content": "We will discover which is better for fried rice"
+    },
+    {
+      "title": "Reading books will make you a better person",
+      "content": "Many research have proofed that reading books will make you smart and wiser"
+    }
+  ],
+  "count": 5
+}
 ```
 
 </BrowserWindow>
 
-You can also use a nested `select` to include relation fields. For example with our case above, we want to include `Reply` creator `email`.
+You can also use a nested `select` to include relation fields. For example with our case above, we want to include creator `email` from all records within `posts` table.
 
 <Tabs>
   <TabItem value="rest_api" label="REST API" default>
 
-```md title="[GET]"
-/replies?select[id]=true&select[content]=true&select[createdBy][select][email]=true
+```md
+[GET] /api/v1/posts/connection?select[title]=true&select[content]=true&select[createdBy][select][email]=true
 ```
 
   </TabItem>
@@ -246,10 +307,10 @@ import { IDKClient } from "@idk/client";
 
 const idk = new IDKClient();
 
-const getReplies = async () => {
-  const replies = await idk.replies.find({
+const getPostsConnection = async () => {
+  const posts = await idk.posts.findConnection({
     select: {
-      id: true,
+      title: true,
       content: true,
       createdBy: {
         select: {
@@ -259,7 +320,7 @@ const getReplies = async () => {
     },
   });
 
-  return replies;
+  return posts;
 };
 ```
 
@@ -268,18 +329,49 @@ const getReplies = async () => {
 
 #### Response
 
-<BrowserWindow url="/replies?select[id]=true&select[content]=true&select[createdBy][select][email]=true">
+<BrowserWindow url="/api/v1/posts/connection?select[title]=true&select[content]=true&select[createdBy][select][email]=true">
 
 ```json
-[
-  {
-    "id": "d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04",
-    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur interdum mauris, ut laoreet dui auctor eget. Phasellus et auctor magna",
-    "createdBy": {
-      "email": "ilhamadiputra4@gmail.com"
+{
+  "data": [
+    {
+      "title": "Today news is confusing",
+      "content": "Our weather today is a little cloudy but the temperature is high",
+      "createdBy": {
+        "email": "tom@gmail.com"
+      }
+    },
+    {
+      "title": "Tomorrow news is better",
+      "content": "Our weather tomorrow is a amazing",
+      "createdBy": {
+        "email": "john@gmail.com"
+      }
+    },
+    {
+      "title": "Tomorrow news is better",
+      "content": "Our weather tomorrow is a amazing",
+      "createdBy": {
+        "email": "tom@gmail.com"
+      }
+    },
+    {
+      "title": "Which is better, using oil or butter for fried rice",
+      "content": "We will discover which is better for fried rice",
+      "createdBy": {
+        "email": "tom@gmail.com"
+      }
+    },
+    {
+      "title": "Reading books will make you a better person",
+      "content": "Many research have proofed that reading books will make you smart and wiser",
+      "createdBy": {
+        "email": "john@gmail.com"
+      }
     }
-  }
-]
+  ],
+  "count": 5
+}
 ```
 
 </BrowserWindow>
@@ -292,14 +384,14 @@ Note that you cannot use `select` and `include` on the same level
 
 ### Include
 
-Include all fields for a specific relation. Let's say we want to include all of `post` fields from `Reply` records.
+Include all fields for a specific relation. Let's say we want to include all of creator fields from all records within `posts` table.
 
 <Tabs>
   <TabItem value="rest_api" label="REST API" default>
-  To <b>read</b> all records with <code>include</code> above using REST API, you have to send a <code>GET</code> request to <code>/replies</code> endpoint with query params <code>include[post]=true</code>
+  To <b>read</b> all records with <code>include</code> above using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts/connection</code> endpoint with query params <code>include[createdBy]=true</code>
 
-```md title="[GET]"
-/replies?include[post]=true
+```md
+[GET] /api/v1/posts/connection?include[createdBy]=true
 ```
 
   </TabItem>
@@ -311,14 +403,14 @@ import { IDKClient } from "@idk/client";
 
 const idk = new IDKClient();
 
-const getReplies = async () => {
-  const replies = await idk.replies.find({
+const getPostsConnection = async () => {
+  const posts = await idk.posts.findConnection({
     include: {
-      post: true,
+      createdBy: true,
     },
   });
 
-  return replies;
+  return posts;
 };
 ```
 
@@ -327,34 +419,94 @@ const getReplies = async () => {
 
 #### Response
 
-<BrowserWindow url="/replies">
-
-<p>
-  After sending a request, the response for all <code>Reply</code> records will
-  look like this
-</p>
+<BrowserWindow url="/api/v1/posts/connection?include[createdBy]=true">
 
 ```json
-[
-  {
-    "id": "d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04",
-    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur interdum mauris, ut laoreet dui auctor eget. Phasellus et auctor magna",
-    "postId": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
-    "createdAt": "2023-08-09T15:08:42.033Z",
-    "updatedAt": "2023-08-09T15:08:42.033Z",
-    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
-    "updatedById": null,
-    "post": {
+{
+  "data": [
+    {
       "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
       "title": "Today news is confusing",
-      "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "content": "Our weather today is a little cloudy but the temperature is high",
       "createdAt": "2023-08-09T14:52:12.783Z",
       "updatedAt": "2023-08-09T14:52:12.783Z",
       "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+      "createdBy": {
+        "id": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+        "email": "tom@gmail.com",
+        "name": "Tom Johnson",
+        "createdAt": "2023-08-09T09:37:51.883Z",
+        "updatedAt": "2023-08-09T09:37:51.883Z"
+      },
+      "updatedById": null
+    },
+    {
+      "id": "764c1c1f-1b7c-4805-8b6d-cfc65caea02a",
+      "title": "Tomorrow news is better",
+      "content": "Our weather tomorrow is a amazing",
+      "createdAt": "2023-08-09T14:52:12.783Z",
+      "updatedAt": "2023-08-09T14:52:12.783Z",
+      "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+      "createdBy": {
+        "id": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+        "email": "tom@gmail.com",
+        "name": "Tom Johnson",
+        "createdAt": "2023-08-09T09:37:51.883Z",
+        "updatedAt": "2023-08-09T09:37:51.883Z"
+      },
+      "updatedById": null
+    },
+    {
+      "id": "764c1c1f-1b7c-4805-8b6d-cfc65caea02a",
+      "title": "Tomorrow news is better",
+      "content": "Our weather tomorrow is a amazing",
+      "createdAt": "2023-08-09T14:52:12.783Z",
+      "updatedAt": "2023-08-09T14:52:12.783Z",
+      "createdById": "6ac0aa6f-c447-4936-ace9-b9038baca50f",
+      "createdBy": {
+        "id": "6ac0aa6f-c447-4936-ace9-b9038baca50f",
+        "email": "john@gmail.com",
+        "name": "John Rider",
+        "createdAt": "2023-09-09T12:54:51.883Z",
+        "updatedAt": "2023-09-09T12:54:51.883Z"
+      },
+      "updatedById": null
+    },
+    {
+      "id": "a40ad5cd-e278-4bb5-b3ac-de665f18d957",
+      "title": "Which is better, using oil or butter for fried rice",
+      "content": "We will discover which is better for fried rice",
+      "createdAt": "2023-08-10T10:34:12.783Z",
+      "updatedAt": "2023-08-10T10:34:12.783Z",
+      "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+      "createdBy": {
+        "id": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+        "email": "tom@gmail.com",
+        "name": "Tom Johnson",
+        "createdAt": "2023-08-09T09:37:51.883Z",
+        "updatedAt": "2023-08-09T09:37:51.883Z"
+      },
+      "updatedById": null
+    },
+    {
+      "id": "73cd92eb-a530-4b86-bfcd-9efebaa31178",
+      "title": "Reading books will make you a better person",
+      "content": "Many research have proofed that reading books will make you smart and wiser",
+      "createdAt": "2023-08-11T14:22:12.783Z",
+      "updatedAt": "2023-08-11T14:22:12.783Z",
+      "createdById": "6ac0aa6f-c447-4936-ace9-b9038baca50f",
+      "createdBy": {
+        "id": "6ac0aa6f-c447-4936-ace9-b9038baca50f",
+        "email": "john@gmail.com",
+        "name": "John Rider",
+        "createdAt": "2023-09-09T12:54:51.883Z",
+        "updatedAt": "2023-09-09T12:54:51.883Z"
+      },
       "updatedById": null
     }
-  }
-]
+  ],
+  "count": 5
+}
 ```
 
 </BrowserWindow>
