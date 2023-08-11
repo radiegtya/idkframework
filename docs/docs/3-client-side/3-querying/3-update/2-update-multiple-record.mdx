@@ -1,73 +1,54 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Update Reply
+# update-multiple-record
 
 import BrowserWindow from "@site/src/components/BrowserWindow";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-Update a record from `Reply` table
-
-## Entity
-
-```typescript
-export class ReplyEntity {
-  id: string,
-  content: string,
-  postId: string,
-  createdById: string,
-  updatedById: string,
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
-## Data Transfer Object (DTO)
-
-```typescript
-export class UpdateReplyDto {
-  content?: string,
-}
-```
-
-## Body
-
-<BrowserWindow url="/replies/:id">
-
-<p>
-  Using our <code>UpdateReplyDto</code>, we are going to update our reply{" "}
-  <code>content</code> into <b>"That's a lot of knowledge, thanks!"</b>
-</p>
-
-```json
-{
-  "content": "That's a lot of knowledge, thanks!"
-}
-```
-
-</BrowserWindow>
+In this example we are going to update multiple records from `posts` table.
 
 ## Request
 
 <Tabs>
   <TabItem value="rest_api" label="REST API" default>
-  To <b>update</b> a record using REST API, you need to have an <code>id</code> from a <code>Reply</code> record, after that send a <code>PATCH</code> request to <code>/replies/:id</code> endpoint
 
-```md title="[PATCH]"
-/replies/:id
+### Url
+
+To <b>update</b> multiple records using REST API, you have to send a <code>PATCH</code> request to <code>/api/v1/posts/many</code> endpoint
+
+```md
+[PATCH] /api/v1/posts/many
 ```
 
-For example, we will <b>update</b> a <code>Reply</code> with an id <code>d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04</code>
+For example, we will <b>update</b> multiple records from <code>posts</code> with an ids <code>6c976b04-05dc-4a6e-8154-0c82ecc21b59</code> and <code>764c1c1f-1b7c-4805-8b6d-cfc65caea02a</code>
 
-```md title="[PATCH]"
-/replies/d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04
+### Body
+
+Pass an object with `where` field that contain an array of object that have an `id` of record you want to update, and a `data` field which have a value you want to update.
+
+```json
+{
+  "where": [
+    {
+      "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59"
+    },
+    {
+      "id": "764c1c1f-1b7c-4805-8b6d-cfc65caea02a"
+    }
+  ],
+  "data": {
+    "title": "How to update multiple records",
+    "content": "Here is how you can update a multiple records"
+  }
+}
 ```
 
   </TabItem>
   <TabItem value="js_sdk" label="Javascript SDK">
-  To <b>update</b> a record using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+  To <b>update</b> multiple records using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
 
 ```bash
 # npm
@@ -77,22 +58,30 @@ npm install @idk/client
 yarn add @idk/client
 ```
 
-after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **update** a <code>Reply</code> record like below
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **update** multiple records from <code>posts</code> table like below
 
 ```javascript
 import { IDKClient } from "@idk/client";
 
 const idk = new IDKClient();
 
-const updateReply = async () => {
-  const reply = await idk.replies.update(
-    "d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04",
-    {
-      content: "That's a lot of knowledge, thanks!",
-    }
-  );
+const updatePosts = async () => {
+  const posts = await idk.posts.updateMany({
+    where: [
+      {
+        id: "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+      },
+      {
+        id: "764c1c1f-1b7c-4805-8b6d-cfc65caea02a",
+      },
+    ],
+    data: {
+      title: "How to update multiple records",
+      content: "Here is how you can update a multiple records",
+    },
+  });
 
-  return reply;
+  return posts;
 };
 ```
 
@@ -101,29 +90,173 @@ const updateReply = async () => {
 
 ### Response
 
-<BrowserWindow url="/replies/d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04">
+<BrowserWindow url="/api/v1/posts/many">
 
-<p>
-  After sending a request, the response for <b>updated</b> <code>Reply</code>{" "}
-  record will look like this
-</p>
+**Before**
 
 ```json
-{
-  "id": "d9c4bc97-7632-49ba-b1dd-43e7cfdbfc04",
-  "content": "That's a lot of knowledge, thanks!",
-  "postId": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
-  "createdAt": "2023-08-09T18:08:42.033Z",
-  "updatedAt": "2023-08-09T18:08:42.033Z",
-  "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
-  "updatedById": null
-}
+[
+  {
+    "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+    "title": "Today news is confusing",
+    "content": "Our weather today is a little cloudy but the temperature is high",
+    "createdAt": "2023-08-09T14:52:12.783Z",
+    "updatedAt": "2023-08-09T14:52:12.783Z",
+    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+    "updatedById": null
+  },
+  {
+    "id": "764c1c1f-1b7c-4805-8b6d-cfc65caea02a",
+    "title": "Tomorrow news is better",
+    "content": "Our weather tomorrow is a amazing",
+    "createdAt": "2023-08-09T14:52:12.783Z",
+    "updatedAt": "2023-08-09T14:52:12.783Z",
+    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+    "updatedById": null
+  }
+]
+```
+
+**After**
+
+```json
+[
+  {
+    "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+    "title": "How to update multiple records",
+    "content": "Here is how you can update a multiple records",
+    "createdAt": "2023-08-09T14:52:12.783Z",
+    "updatedAt": "2023-08-09T14:52:12.783Z",
+    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+    "updatedById": null
+  },
+  {
+    "id": "764c1c1f-1b7c-4805-8b6d-cfc65caea02a",
+    "title": "How to update multiple records",
+    "content": "Here is how you can update a multiple records",
+    "createdAt": "2023-08-09T14:52:12.783Z",
+    "updatedAt": "2023-08-09T14:52:12.783Z",
+    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+    "updatedById": null
+  }
+]
 ```
 
 </BrowserWindow>
 
+## Update with filter condition
+
+Another example is, let's say that we want to update multiple records that have a `title` which contain **"news"** word in it.
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+
+### Url
+
+To <b>update</b> multiple records using REST API, you have to send a <code>PATCH</code> request to <code>/api/v1/posts/many</code> endpoint
+
+```md
+[PATCH] /api/v1/posts/many
+```
+
+### Body
+
+Pass an object with `where` field that have a value of your filter
+
+```json
+{
+  "where": {
+    "title": {
+      "contains": "news"
+    }
+  },
+  "data": {
+    "title": "Multiple update with filter"
+  }
+}
+```
+
 :::info
 
-Also read on **[Link and unlink relation](./)** section.
+Read more about filter on **[filters](./)** section.
 
 :::
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const updatePosts = async () => {
+  const posts = await idk.posts.updateMany({
+    where: { title: { contains: "news" } },
+    data: {
+      title: "Multiple update with filter",
+    },
+  });
+
+  return posts;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+### Response
+
+<BrowserWindow url="/api/v1/posts/many">
+
+**Before**
+
+```json
+[
+  {
+    "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+    "title": "Today news is confusing",
+    "content": "Our weather today is a little cloudy but the temperature is high",
+    "createdAt": "2023-08-09T14:52:12.783Z",
+    "updatedAt": "2023-08-09T14:52:12.783Z",
+    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+    "updatedById": null
+  },
+  {
+    "id": "764c1c1f-1b7c-4805-8b6d-cfc65caea02a",
+    "title": "Tomorrow news is better",
+    "content": "Our weather tomorrow is a amazing",
+    "createdAt": "2023-08-09T14:52:12.783Z",
+    "updatedAt": "2023-08-09T14:52:12.783Z",
+    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+    "updatedById": null
+  }
+]
+```
+
+**After**
+
+```json
+[
+  {
+    "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+    "title": "Multiple update with filter",
+    "content": "Our weather today is a little cloudy but the temperature is high",
+    "createdAt": "2023-08-09T14:52:12.783Z",
+    "updatedAt": "2023-08-09T14:52:12.783Z",
+    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+    "updatedById": null
+  },
+  {
+    "id": "764c1c1f-1b7c-4805-8b6d-cfc65caea02a",
+    "title": "Multiple update with filter",
+    "content": "Our weather tomorrow is a amazing",
+    "createdAt": "2023-08-09T14:52:12.783Z",
+    "updatedAt": "2023-08-09T14:52:12.783Z",
+    "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+    "updatedById": null
+  }
+]
+```
+
+</BrowserWindow>
