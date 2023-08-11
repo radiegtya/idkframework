@@ -1,0 +1,286 @@
+---
+sidebar_position: 3
+---
+
+# find-one
+
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+In this example we are going to find one record from `posts` table.
+
+## Entity
+
+```json
+{
+  "id": "string",
+  "title": "string",
+  "content": "string",
+  "createdById": "string",
+  "updatedById": "string",
+  "createdAt": "date",
+  "updatedAt": "date"
+}
+```
+
+## Request
+
+#### Default read one records
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+  To <b>read</b> one record using REST API, you need to have an <code>id</code> from a record, after that send a <code>GET</code> request to <code>/api/v1/posts/:id</code> endpoint
+
+```md
+[GET] /api/v1/posts/:id
+```
+
+For example, we will <b>read</b> one record from <code>posts</code> with an id <code>a40ad5cd-e278-4bb5-b3ac-de665f18d957</code>
+
+```md
+[GET] /api/v1/posts/a40ad5cd-e278-4bb5-b3ac-de665f18d957
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+    To send a request using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+
+```bash
+# npm
+npm install @idk/client
+
+# yarn
+yarn add @idk/client
+```
+
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **read** one record from <code>posts</code> table like below
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const getPost = async () => {
+  const post = await idk.posts.findOne("a40ad5cd-e278-4bb5-b3ac-de665f18d957");
+
+  return post;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+### Response
+
+<BrowserWindow url="/api/v1/posts/a40ad5cd-e278-4bb5-b3ac-de665f18d957">
+
+```json
+{
+  "id": "a40ad5cd-e278-4bb5-b3ac-de665f18d957",
+  "title": "Which is better, using oil or butter for fried rice",
+  "content": "We will discover which is better for fried rice",
+  "createdAt": "2023-08-10T10:34:12.783Z",
+  "updatedAt": "2023-08-10T10:34:12.783Z",
+  "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+  "updatedById": null
+}
+```
+
+</BrowserWindow>
+
+## Select and Include
+
+Selecting only the fields and relations that you require rather than relying on the default selection set can ✔ reduce the size of the response and ✔ improve query speed.
+
+### Select
+
+All the fields are included in the response by default. You can select a subset of fields by providing the `select` query params. Let's say we just want to select `title` and `content` from one record within `posts` table
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+  To <b>read</b> one record with <code>select</code> above using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts/:id</code> endpoint with query params <code>select[title]=true&select[content]=true</code>
+
+```md
+[GET] /api/v1/posts/:id?select[title]=true&select[content]=true
+```
+
+For example, we will <b>read</b> one record from <code>posts</code> with an id <code>a40ad5cd-e278-4bb5-b3ac-de665f18d957</code>
+
+```md
+[GET] /api/v1/posts/a40ad5cd-e278-4bb5-b3ac-de665f18d957?select[title]=true&select[content]=true
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+  To <b>read</b> one record with <code>select</code> above using our Javascript SDK, it will look like this
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const getPost = async () => {
+  const post = await idk.posts.findOne("a40ad5cd-e278-4bb5-b3ac-de665f18d957", {
+    select: {
+      title: true,
+      content: true,
+    },
+  });
+
+  return post;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+#### Response
+
+<BrowserWindow url="/api/v1/posts/a40ad5cd-e278-4bb5-b3ac-de665f18d957?select[title]=true&select[content]=true">
+
+```json
+{
+  "title": "Which is better, using oil or butter for fried rice",
+  "content": "We will discover which is better for fried rice"
+}
+```
+
+</BrowserWindow>
+
+You can also use a nested `select` to include relation fields. For example with our case above, we want to include creator `email` from a record within `posts` table.
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+
+```md
+[GET] /api/v1/posts/:id?select[title]=true&select[content]=true&select[createdBy][select][email]=true
+```
+
+For example, we will <b>read</b> one record from <code>posts</code> with an id <code>a40ad5cd-e278-4bb5-b3ac-de665f18d957</code>
+
+```md
+[GET] /api/v1/posts/a40ad5cd-e278-4bb5-b3ac-de665f18d957?select[title]=true&select[content]=true&select[createdBy][select][email]=true
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const getPost = async () => {
+  const post = await idk.posts.findOne("a40ad5cd-e278-4bb5-b3ac-de665f18d957", {
+    select: {
+      title: true,
+      content: true,
+      createdBy: {
+        select: {
+          email: true,
+        },
+      },
+    },
+  });
+
+  return post;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+#### Response
+
+<BrowserWindow url="/api/v1/posts/a40ad5cd-e278-4bb5-b3ac-de665f18d957?select[title]=true&select[content]=true&select[createdBy][select][email]=true">
+
+```json
+{
+  "title": "Which is better, using oil or butter for fried rice",
+  "content": "We will discover which is better for fried rice",
+  "createdBy": {
+    "email": "tom@gmail.com"
+  }
+}
+```
+
+</BrowserWindow>
+
+:::warning
+
+Note that you cannot use `select` and `include` on the same level
+
+:::
+
+### Include
+
+Include all fields for a specific relation. Let's say we want to include all of creator fields from a record within `posts` table.
+
+<Tabs>
+  <TabItem value="rest_api" label="REST API" default>
+  To <b>read</b> one record with <code>include</code> above using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts/:id</code> endpoint with query params <code>include[createdBy]=true</code>
+
+```md
+[GET] /api/v1/posts/:id?include[createdBy]=true
+```
+
+For example, we will <b>read</b> one record from <code>posts</code> with an id <code>a40ad5cd-e278-4bb5-b3ac-de665f18d957</code>
+
+```md
+[GET] /api/v1/posts/a40ad5cd-e278-4bb5-b3ac-de665f18d957?include[createdBy]=true
+```
+
+  </TabItem>
+  <TabItem value="js_sdk" label="Javascript SDK">
+  To <b>read</b> one record with <code>include</code> above using our Javascript SDK, it will look like this
+
+```javascript
+import { IDKClient } from "@idk/client";
+
+const idk = new IDKClient();
+
+const getPost = async () => {
+  const post = await idk.posts.findOne("a40ad5cd-e278-4bb5-b3ac-de665f18d957", {
+    include: {
+      createdBy: true,
+    },
+  });
+
+  return post;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+#### Response
+
+<BrowserWindow url="/api/v1/posts/a40ad5cd-e278-4bb5-b3ac-de665f18d957?include[createdBy]=true">
+
+```json
+{
+  "id": "a40ad5cd-e278-4bb5-b3ac-de665f18d957",
+  "title": "Which is better, using oil or butter for fried rice",
+  "content": "We will discover which is better for fried rice",
+  "createdAt": "2023-08-10T10:34:12.783Z",
+  "updatedAt": "2023-08-10T10:34:12.783Z",
+  "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+  "createdBy": {
+    "id": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+    "email": "tom@gmail.com",
+    "name": "Tom Johnson",
+    "createdAt": "2023-08-09T09:37:51.883Z",
+    "updatedAt": "2023-08-09T09:37:51.883Z"
+  },
+  "updatedById": null
+}
+```
+
+</BrowserWindow>
+
+:::info
+
+Read more on **[select and include](./)** section.
+
+:::
