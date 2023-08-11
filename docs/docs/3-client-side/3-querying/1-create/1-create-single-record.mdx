@@ -8,7 +8,7 @@ import BrowserWindow from "@site/src/components/BrowserWindow";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-Create a record to `posts` table
+In this example we are going to create a single record to `posts` table
 
 ## Request
 
@@ -16,6 +16,7 @@ Create a record to `posts` table
   <TabItem value="rest_api" label="REST API" default>
 
 ### Url
+
 To <b>create</b> a record using REST API, you have to send a <code>POST</code> request to <code>/api/v1/posts</code> endpoint
 
 ```md
@@ -30,9 +31,10 @@ To <b>create</b> a record using REST API, you have to send a <code>POST</code> r
   "content": "Our weather today is a little cloudy but the temperature is high"
 }
 ```
+
   </TabItem>
   <TabItem value="js_sdk" label="Javascript SDK">
-    To <b>create</b> a record using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+    To send a request using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
 
 ```bash
 # npm
@@ -42,7 +44,7 @@ npm install @idk/client
 yarn add @idk/client
 ```
 
-after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **create** a <code>Post</code> record like below
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **create** a single record to <code>posts</code> table like below
 
 ```javascript
 import { IDKClient } from "@idk/client";
@@ -52,8 +54,7 @@ const idk = new IDKClient();
 const createPost = async () => {
   const post = await idk.posts.create({
     title: "Today news is confusing",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    content: "Our weather today is a little cloudy but the temperature is high",
   });
 
   return post;
@@ -68,15 +69,15 @@ const createPost = async () => {
 <BrowserWindow url="/api/v1/posts">
 
 <p>
-  After sending a request, the response for your new <code>Post</code> record
-  will look like this
+  After sending a request, the response for creating single record to{" "}
+  <code>posts</code> table will look like this
 </p>
 
 ```json
 {
   "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
   "title": "Today news is confusing",
-  "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  "content": "Our weather today is a little cloudy but the temperature is high",
   "createdAt": "2023-08-09T14:52:12.783Z",
   "updatedAt": "2023-08-09T14:52:12.783Z",
   "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
@@ -85,4 +86,3 @@ const createPost = async () => {
 ```
 
 </BrowserWindow>
-
