@@ -8,9 +8,10 @@ import BrowserWindow from "@site/src/components/BrowserWindow";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-In this example we are going to find records with connection from `posts` table. Basically it's the same as `find-all`, but only it have additional detail as records `count`.
+In this example we are going to find records with connection from `posts` table. Basically it's the same as [**`find-all`**](./1-find-all.mdx), but only it have additional detail as records `count`.
 
-When using **REST API**, instead of using regular `/api/v1/posts`, we are going to use `/api/v1/posts/connection`. When using **Javascript SDK**, instead of using `find` method, we are going to use `findConnection` method.
+- When using **REST API**, instead of using regular `/api/v1/posts`, we are going to use `/api/v1/posts/connection`.
+- When using **Javascript SDK**, instead of using `find` method, we are going to use `findConnection` method.
 
 ## Entity
 
@@ -75,11 +76,6 @@ const getPostsConnection = async () => {
 ### Response
 
 <BrowserWindow url="/api/v1/posts/connection">
-
-<p>
-  After sending a request, the response for all records of <code>posts</code>{" "}
-  table will look like this
-</p>
 
 ```json
 {
@@ -177,11 +173,6 @@ const getPostsConnection = async () => {
 
 <BrowserWindow url="/api/v1/posts/connection?where[title][contains]=better">
 
-<p>
-  After sending a request, the response for all records from <code>posts</code>{" "}
-  table that have been filtered above will look like this
-</p>
-
 ```json
 {
   "data": [
@@ -268,11 +259,6 @@ const getPostsConnection = async () => {
 #### Response
 
 <BrowserWindow url="/api/v1/posts/connection?select[title]=true&select[content]=true">
-
-<p>
-  After sending a request, the response for all <code>Post</code> records with
-  selected <code>title</code> and <code>content</code> field will look like this
-</p>
 
 ```json
 {
@@ -434,11 +420,6 @@ const getPostsConnection = async () => {
 #### Response
 
 <BrowserWindow url="/api/v1/posts/connection?include[createdBy]=true">
-
-<p>
-  After sending a request, the response for all <code>Post</code> records will
-  look like this
-</p>
 
 ```json
 {

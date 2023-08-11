@@ -71,11 +71,6 @@ const getPosts = async () => {
 
 <BrowserWindow url="/api/v1/posts">
 
-<p>
-  After sending a request, the response for all records of <code>posts</code>{" "}
-  table will look like this
-</p>
-
 ```json
 [
   {
@@ -169,11 +164,6 @@ const getPosts = async () => {
 
 <BrowserWindow url="/api/v1/posts?where[title][contains]=better">
 
-<p>
-  After sending a request, the response for all records from <code>posts</code>{" "}
-  table that have been filtered above will look like this
-</p>
-
 ```json
 [
   {
@@ -257,11 +247,6 @@ const getPosts = async () => {
 #### Response
 
 <BrowserWindow url="/api/v1/posts?select[title]=true&select[content]=true">
-
-<p>
-  After sending a request, the response for all <code>Post</code> records with
-  selected <code>title</code> and <code>content</code> field will look like this
-</p>
 
 ```json
 [
@@ -417,11 +402,6 @@ const getPosts = async () => {
 #### Response
 
 <BrowserWindow url="/api/v1/posts?include[createdBy]=true">
-
-<p>
-  After sending a request, the response for all <code>Post</code> records will
-  look like this
-</p>
 
 ```json
 [
