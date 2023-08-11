@@ -2,76 +2,48 @@
 sidebar_position: 1
 ---
 
-# Update Post
+# update-single-record
 
 import BrowserWindow from "@site/src/components/BrowserWindow";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-Update a record from `Post` table
-
-## Entity
-
-```typescript
-export class PostEntity {
-  id: string,
-  title: string,
-  content: string,
-  createdById: string,
-  updatedById: string,
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
-## Data Transfer Object (DTO)
-
-```typescript
-export class UpdatePostDto {
-  title?: string,
-  content?: string,
-}
-```
-
-## Body
-
-<BrowserWindow url="/posts/:id">
-
-<p>
-  Using our <code>UpdatePostDto</code>, we are going to update our post{" "}
-  <code>title</code> into <b>"How to be a Software Engineer"</b> and{" "}
-  <code>content</code> into{" "}
-  <b>"Phasellus a tellus non est faucibus congue a eget risus."</b>
-</p>
-
-```json
-{
-  "title": "How to be a Software Engineer",
-  "content": "Phasellus a tellus non est faucibus congue a eget risus."
-}
-```
-
-</BrowserWindow>
+In this example we are going to update a single record from `posts` table.
 
 ## Request
 
 <Tabs>
   <TabItem value="rest_api" label="REST API" default>
-  To <b>update</b> a record using REST API, you need to have an <code>id</code> from a <code>Post</code> record, after that send a <code>PATCH</code> request to <code>/posts/:id</code> endpoint
 
-```md title="[PATCH]"
-/posts/:id
+### URL
+
+To <b>update</b> a single record using REST API, you need to have an <code>id</code> from a record, after that send a <code>PATCH</code> request to <code>/api/v1/posts/:id</code> endpoint
+
+```md
+[PATCH] /api/v1/posts/:id
 ```
 
-For example, we will <b>update</b> a <code>Post</code> with an id <code>6c976b04-05dc-4a6e-8154-0c82ecc21b59</code>
+For example, we will <b>update</b> single record from <code>posts</code> table with an id <code>73cd92eb-a530-4b86-bfcd-9efebaa31178</code>
 
-```md title="[PATCH]"
-/posts/6c976b04-05dc-4a6e-8154-0c82ecc21b59
+```md
+[PATCH] /api/v1/posts/73cd92eb-a530-4b86-bfcd-9efebaa31178
 ```
 
+### Body
+
+<BrowserWindow url="/api/v1/posts/73cd92eb-a530-4b86-bfcd-9efebaa31178">
+
+```json
+{
+  "title": "How to be a Software Engineer",
+  "content": "You can see some random tutorial at YouTube."
+}
+```
+
+</BrowserWindow>
   </TabItem>
   <TabItem value="js_sdk" label="Javascript SDK">
-  To <b>update</b> a record using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
+  To <b>update</b> a single record using our Javascript SDK, you must install <code>@idk/client</code> from <code>npm</code>
 
 ```bash
 # npm
@@ -81,7 +53,7 @@ npm install @idk/client
 yarn add @idk/client
 ```
 
-after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **update** a <code>Post</code> record like below
+after installing, you must import <code>IDKClient</code> from <code>@idk/client</code> and use that to **update** a single record from <code>posts</code> table like below
 
 ```javascript
 import { IDKClient } from "@idk/client";
@@ -89,9 +61,9 @@ import { IDKClient } from "@idk/client";
 const idk = new IDKClient();
 
 const updatePost = async () => {
-  const post = await idk.posts.update("6c976b04-05dc-4a6e-8154-0c82ecc21b59", {
+  const post = await idk.posts.update("73cd92eb-a530-4b86-bfcd-9efebaa31178", {
     title: "How to be a Software Engineer",
-    content: "Phasellus a tellus non est faucibus congue a eget risus.",
+    content: "You can see some random tutorial at YouTube.",
   });
 
   return post;
@@ -101,31 +73,20 @@ const updatePost = async () => {
   </TabItem>
 </Tabs>
 
-### Response
+## Response
 
-<BrowserWindow url="/posts/6c976b04-05dc-4a6e-8154-0c82ecc21b59">
-
-<p>
-  After sending a request, the response for <b>updated</b> <code>Post</code>{" "}
-  record will look like this
-</p>
+<BrowserWindow url="/api/v1/posts/73cd92eb-a530-4b86-bfcd-9efebaa31178">
 
 ```json
 {
-  "id": "6c976b04-05dc-4a6e-8154-0c82ecc21b59",
+  "id": "73cd92eb-a530-4b86-bfcd-9efebaa31178",
   "title": "How to be a Software Engineer",
-  "content": "Phasellus a tellus non est faucibus congue a eget risus.",
-  "createdAt": "2023-08-09T16:52:12.783Z",
-  "updatedAt": "2023-08-09T16:52:12.783Z",
-  "createdById": "94305f93-e248-4f3b-b45b-f233cb1ec026",
+  "content": "You can see some random tutorial at YouTube.",
+  "createdAt": "2023-08-11T14:22:12.783Z",
+  "updatedAt": "2023-08-11T14:22:12.783Z",
+  "createdById": "6ac0aa6f-c447-4936-ace9-b9038baca50f",
   "updatedById": null
 }
 ```
 
 </BrowserWindow>
-
-:::info
-
-Also read on **[Link and unlink relation](./)** section.
-
-:::
