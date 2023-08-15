@@ -19,14 +19,14 @@ In this example we are going to connect single record from `replies` table to a 
 
 To <b>connect</b> a single record using REST API, you need to have an <code>id</code> from a destination record, which is in this case a record from <code>posts</code> table, after that send a <code>PATCH</code> request to <code>/api/v1/posts/:id</code> endpoint
 
-```md
-[PATCH] /api/v1/posts/:id
+```md title="[PATCH]"
+/api/v1/posts/:id
 ```
 
 For example, we will <b>connect</b> a single record from <code>replies</code> table which have an id <code>36934110-f989-4c63-87ce-195c6ab37920</code> <b>to</b> a single record from <code>posts</code> table with an id <code>73cd92eb-a530-4b86-bfcd-9efebaa31178</code>
 
-```md
-[PATCH] /api/v1/posts/73cd92eb-a530-4b86-bfcd-9efebaa31178
+```md title="[PATCH]"
+/api/v1/posts/73cd92eb-a530-4b86-bfcd-9efebaa31178
 ```
 
 ### Body
