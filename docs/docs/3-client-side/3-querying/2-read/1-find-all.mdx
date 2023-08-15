@@ -18,8 +18,8 @@ In this example we are going to find records from `posts` table.
   <TabItem value="rest_api" label="REST API" default>
   To <b>read</b> all records using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts</code> endpoint
 
-```md
-[GET] /api/v1/posts
+```md title="[GET]"
+/api/v1/posts
 ```
 
   </TabItem>
@@ -115,8 +115,8 @@ Records can optionally be filtered, for example we want to filter records from `
   <TabItem value="rest_api" label="REST API" default>
   To <b>read</b> all records with <b>filter</b> above using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts</code> endpoint with stringified object query params <code>where[title][contains]=better</code>
 
-```md
-[GET] /api/v1/posts?where[title][contains]=better
+```md title="[GET]"
+/api/v1/posts?where[title][contains]=better
 ```
 
   </TabItem>
@@ -200,8 +200,8 @@ All the fields are included in the response by default. You can select a subset 
   <TabItem value="rest_api" label="REST API" default>
   To <b>read</b> all records with <code>select</code> above using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts</code> endpoint with query params <code>select[title]=true&select[content]=true</code>
 
-```md
-[GET] /api/v1/posts?select[title]=true&select[content]=true
+```md title="[GET]"
+/api/v1/posts?select[title]=true&select[content]=true
 ```
 
   </TabItem>
@@ -264,8 +264,8 @@ You can also use a nested `select` to include relation fields. For example with 
 <Tabs>
   <TabItem value="rest_api" label="REST API" default>
 
-```md
-[GET] /api/v1/posts?select[title]=true&select[content]=true&select[createdBy][select][email]=true
+```md title="[GET]"
+/api/v1/posts?select[title]=true&select[content]=true&select[createdBy][select][email]=true
 ```
 
   </TabItem>
@@ -356,8 +356,8 @@ Include all fields for a specific relation. Let's say we want to include all of 
   <TabItem value="rest_api" label="REST API" default>
   To <b>read</b> all records with <code>include</code> above using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts</code> endpoint with query params <code>include[createdBy]=true</code>
 
-```md
-[GET] /api/v1/posts?include[createdBy]=true
+```md title="[GET]"
+/api/v1/posts?include[createdBy]=true
 ```
 
   </TabItem>
