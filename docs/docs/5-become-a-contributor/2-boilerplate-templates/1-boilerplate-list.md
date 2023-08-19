@@ -8,7 +8,7 @@ Boilerplates are one of the core concept of this framework. This framework expec
 
 1. Express + sequelize (taken by @masdimya)
 2. Express + typeorm
-3. Express + prisma
+3. Express + prisma (taken by @maulanasdqn)
 4. Django
 5. Laravel (taken by @juanvaleriand & @asp05)
 6. Go Gorilla mux + TBD
