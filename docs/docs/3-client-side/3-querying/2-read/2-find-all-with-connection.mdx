@@ -8,29 +8,10 @@ import BrowserWindow from "@site/src/components/BrowserWindow";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-In this example we are going to find records with connection from `posts` table. Basically it's the same as [**`find-all`**](./1-find-all.mdx), but only it have additional detail as records `count`.
+In this example we are going to find records with connection from `posts` table. Basically it's the same as [**`find-all`**](./1-find-all.mdx), but only it have additional detail as records `count`, `skip`, and `take`.
 
 - When using **REST API**, instead of using regular `/api/v1/posts`, we are going to use `/api/v1/posts/connection`.
 - When using **Javascript SDK**, instead of using `find` method, we are going to use `findConnection` method.
-
-## Entity
-
-```json
-{
-  "data": [
-    {
-      "id": "string",
-      "title": "string",
-      "content": "string",
-      "createdById": "string",
-      "updatedById": "string",
-      "createdAt": "date",
-      "updatedAt": "date"
-    }
-  ],
-  "count": "number"
-}
-```
 
 ## Request
 
@@ -40,8 +21,8 @@ In this example we are going to find records with connection from `posts` table.
   <TabItem value="rest_api" label="REST API" default>
   To <b>read</b> all records using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts/connection</code> endpoint
 
-```md
-[GET] /api/v1/posts/connection
+```md title="[GET]"
+/api/v1/posts/connection
 ```
 
   </TabItem>
@@ -126,7 +107,9 @@ const getPostsConnection = async () => {
       "updatedById": null
     }
   ],
-  "count": 5
+  "count": 5,
+  "skip": 0,
+  "take": 0
 }
 ```
 
@@ -140,8 +123,8 @@ Records can optionally be filtered, for example we want to filter records from `
   <TabItem value="rest_api" label="REST API" default>
   To <b>read</b> all records with <b>filter</b> above using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts/connection</code> endpoint with stringified object query params <code>where[title][contains]=better</code>
 
-```md
-[GET] /api/v1/posts/connection?where[title][contains]=better
+```md title="[GET]"
+/api/v1/posts/connection?where[title][contains]=better
 ```
 
   </TabItem>
@@ -204,7 +187,9 @@ const getPostsConnection = async () => {
       "updatedById": null
     }
   ],
-  "count": 3
+  "count": 3,
+  "skip": 0,
+  "take": 0
 }
 ```
 
@@ -228,8 +213,8 @@ All the fields are included in the response by default. You can select a subset 
   <TabItem value="rest_api" label="REST API" default>
   To <b>read</b> all records with <code>select</code> above using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts/connection</code> endpoint with query params <code>select[title]=true&select[content]=true</code>
 
-```md
-[GET] /api/v1/posts/connection?select[title]=true&select[content]=true
+```md title="[GET]"
+/api/v1/posts/connection?select[title]=true&select[content]=true
 ```
 
   </TabItem>
@@ -284,7 +269,9 @@ const getPostsConnection = async () => {
       "content": "Many research have proofed that reading books will make you smart and wiser"
     }
   ],
-  "count": 5
+  "count": 5,
+  "skip": 0,
+  "take": 0
 }
 ```
 
@@ -295,8 +282,8 @@ You can also use a nested `select` to include relation fields. For example with 
 <Tabs>
   <TabItem value="rest_api" label="REST API" default>
 
-```md
-[GET] /api/v1/posts/connection?select[title]=true&select[content]=true&select[createdBy][select][email]=true
+```md title="[GET]"
+/api/v1/posts/connection?select[title]=true&select[content]=true&select[createdBy][select][email]=true
 ```
 
   </TabItem>
@@ -370,7 +357,9 @@ const getPostsConnection = async () => {
       }
     }
   ],
-  "count": 5
+  "count": 5,
+  "skip": 0,
+  "take": 0
 }
 ```
 
@@ -390,8 +379,8 @@ Include all fields for a specific relation. Let's say we want to include all of 
   <TabItem value="rest_api" label="REST API" default>
   To <b>read</b> all records with <code>include</code> above using REST API, you have to send a <code>GET</code> request to <code>/api/v1/posts/connection</code> endpoint with query params <code>include[createdBy]=true</code>
 
-```md
-[GET] /api/v1/posts/connection?include[createdBy]=true
+```md title="[GET]"
+/api/v1/posts/connection?include[createdBy]=true
 ```
 
   </TabItem>
@@ -505,7 +494,9 @@ const getPostsConnection = async () => {
       "updatedById": null
     }
   ],
-  "count": 5
+  "count": 5,
+  "skip": 0,
+  "take": 0
 }
 ```
 
